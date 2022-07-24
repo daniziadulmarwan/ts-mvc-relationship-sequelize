@@ -4,13 +4,17 @@ const db = require("../database/models");
 
 class PostController implements IController {
   async index(req: Request, res: Response): Promise<any> {
-    const data = await db.User.findOne({
+    // const data = await db.User.findOne({
+    //   where: { id: 1 },
+    //   include: db.Post,
+    // });
+
+    const data = await db.Post.findOne({
+      include: db.User,
       where: { id: 1 },
-      include: db.Post,
     });
-    console.log(data.fullname);
-    console.log(data.Posts);
-    console.log(data.Posts[0].title);
+    console.log(data.title);
+    console.log(data.User.fullname);
     return res.render("pages/posts/index", { active: "post" });
   }
 

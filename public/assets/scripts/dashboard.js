@@ -1,8 +1,5 @@
 (() => {
   "use strict";
-
-  feather.replace({ "aria-hidden": "true" });
-
   function barChart(value) {
     let options = {
       series: [value],
