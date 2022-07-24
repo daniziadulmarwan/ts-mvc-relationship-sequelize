@@ -8,7 +8,11 @@ export const register = [
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.send(errors.array());
+      errors.array().map((err) => {
+        req.flash("message", `${err.msg}`);
+      });
+      req.flash("alert", "danger");
+      return res.redirect("/register");
     }
 
     next();

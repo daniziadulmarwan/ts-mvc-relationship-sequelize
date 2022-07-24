@@ -10,7 +10,10 @@ class AuthController {
   }
 
   register(req: Request, res: Response): void {
-    res.render("pages/auth/signup");
+    const alertStatus = req.flash("alert");
+    const alertMessage = req.flash("message");
+    const alert = { message: alertMessage, status: alertStatus };
+    res.render("pages/auth/signup", { alert });
   }
 
   signup(req: Request, res: Response): void {
