@@ -1,0 +1,111 @@
+<%- include('../../includes/header.ejs') %>
+<body>
+  <%- include('../../includes/navbar.ejs') %>
+  <div class="container-fluid">
+    <div class="row">
+      <%- include('../../includes/sidebar.ejs') %>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+        >
+          <h1 class="h2">Edit Student</h1>
+
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/student">Student</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Edit</li>
+            </ol>
+          </nav>
+        </div>
+
+        <!-- START: Content -->
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <!-- START: Form -->
+                  <form
+                    action="/student/<%= student.id %>?_method=PUT"
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Fullname</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        autocomplete="off"
+                        value="<%= student.name %>"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="phone" class="form-label">Phone</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="phone"
+                        id="phone"
+                        autocomplete="off"
+                        value="<%= student.phone %>"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="formFile" class="form-label">Upload</label>
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="formFile"
+                        name="image"
+                        onchange="previewImage()"
+                      />
+
+                      <% if (student.image) { %>
+                      <img
+                        src="http://localhost:4000/uploads/<%= student.image %>"
+                        class="img-fluid img-preview mt-3"
+                        width="150"
+                      />
+                      <% } else { %>
+                      <img
+                        class="img-fluid img-preview d-none mt-3"
+                        width="150"
+                      />
+                      <% } %>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100 rounded-1">
+                      Update New Student
+                    </button>
+                  </form>
+
+                  <!-- END: Form -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-5"></div>
+        <!-- END: Content -->
+      </main>
+    </div>
+  </div>
+  <%- include('../../includes/footer.ejs') %>
+  <script>
+    function previewImage() {
+      const formFile = document.getElementById("formFile");
+      const imgPreview = document.querySelector(".img-preview");
+
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(formFile.files[0]);
+
+      oFReader.onload = function (oFREvent) {
+        imgPreview.classList.remove("d-none");
+        imgPreview.src = oFREvent.target.result;
+      };
+    }
+  </script>
+</body>
