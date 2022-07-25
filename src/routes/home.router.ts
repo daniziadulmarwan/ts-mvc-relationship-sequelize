@@ -12,7 +12,8 @@ class HomeRouter implements IRouter {
   }
 
   router(): void {
-    this.route.get("/", auth, homeController.index);
+    this.route.use(auth);
+    this.route.get("/", homeController.index);
     this.route.get("/chart", homeController.chart);
   }
 }

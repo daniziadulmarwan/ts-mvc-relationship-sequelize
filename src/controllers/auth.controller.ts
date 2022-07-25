@@ -29,7 +29,7 @@ class AuthController {
 
       req.session.user = {
         id: user.id,
-        name: user.name,
+        name: user.fullname,
         role: user.role,
       };
 

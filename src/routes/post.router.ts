@@ -3,6 +3,7 @@ import IRouter from "./router.interface";
 
 // controller
 import postController from "../controllers/post.controller";
+import auth from "../middlewares/auth";
 
 class PostRouter implements IRouter {
   public route: Router;
@@ -13,6 +14,7 @@ class PostRouter implements IRouter {
   }
 
   router(): void {
+    this.route.use(auth);
     this.route.get("/", postController.index);
   }
 }

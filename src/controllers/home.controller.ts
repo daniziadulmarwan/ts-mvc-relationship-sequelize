@@ -4,8 +4,10 @@ const db = require("../database/models");
 
 class HomeController {
   async index(req: Request, res: Response): Promise<any> {
-    req.session.user = { name: "Dani" };
-    res.render("pages/dashboard/index", { active: "dashboard" });
+    res.render("pages/dashboard/index", {
+      active: "dashboard",
+      user: req.session.user,
+    });
   }
 
   async chart(req: Request, res: Response): Promise<Response> {

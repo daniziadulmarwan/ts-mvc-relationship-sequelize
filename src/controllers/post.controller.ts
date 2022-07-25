@@ -9,12 +9,10 @@ class PostController implements IController {
     //   include: db.Post,
     // });
 
-    const data = await db.Post.findOne({
-      include: db.User,
-      where: { id: 1 },
-    });
-    console.log(data.title);
-    console.log(data.User.fullname);
+    // const data = await db.Post.findOne({
+    //   include: db.User,
+    //   where: { id: 1 },
+    // });
     return res.render("pages/posts/index", { active: "post" });
   }
 

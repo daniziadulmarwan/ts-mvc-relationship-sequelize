@@ -11,8 +11,6 @@ class StudentController {
     const alertMessage = req.flash("message");
     const alert = { message: alertMessage, status: alertStatus };
 
-    console.log(req.session.user);
-
     return res.render("pages/student/index", {
       active: "student",
       students,
