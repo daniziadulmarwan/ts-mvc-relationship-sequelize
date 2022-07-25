@@ -13,7 +13,10 @@ class PostController implements IController {
     //   include: db.User,
     //   where: { id: 1 },
     // });
-    return res.render("pages/posts/index", { active: "post" });
+    return res.render("pages/posts/index", {
+      active: "post",
+      user: req.session.user,
+    });
   }
 
   create(req: Request, res: Response) {

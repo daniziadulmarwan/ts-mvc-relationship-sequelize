@@ -5,7 +5,10 @@ import IController from "./controller.interface";
 
 class SettingController implements IController {
   index(req: Request, res: Response): void {
-    return res.render("pages/setting/index", { active: "setting" });
+    return res.render("pages/setting/index", {
+      active: "setting",
+      user: req.session.user,
+    });
   }
 
   create(

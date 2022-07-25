@@ -2,7 +2,7 @@ import { Router } from "express";
 import IRouter from "./router.interface";
 import authController from "../controllers/auth.controller";
 import { register } from "../middlewares/validation/register.validate";
-import { login } from "../middlewares/validation/login.validation";
+import { login } from "../middlewares/validation/login.validate";
 
 class AuthRouter implements IRouter {
   public route: Router;

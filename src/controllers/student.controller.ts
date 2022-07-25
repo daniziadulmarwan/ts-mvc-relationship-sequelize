@@ -15,11 +15,15 @@ class StudentController {
       active: "student",
       students,
       alert,
+      user: req.session.user,
     });
   }
 
   create(req: Request, res: Response): void {
-    res.render("pages/student/create", { active: "student" });
+    res.render("pages/student/create", {
+      active: "student",
+      user: req.session.user,
+    });
   }
 
   async post(req: Request, res: Response): Promise<any> {
@@ -74,7 +78,11 @@ class StudentController {
 
   async edit(req: Request, res: Response): Promise<any> {
     const student = await db.Student.findByPk(req.params.id);
-    res.render("pages/student/edit", { active: "student", student });
+    res.render("pages/student/edit", {
+      active: "student",
+      student,
+      user: req.session.user,
+    });
   }
 
   async update(req: Request, res: Response): Promise<any> {
