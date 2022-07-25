@@ -21,10 +21,12 @@
   />
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">
-        <span data-feather="log-out" class="align-text-bottom"></span>
-        Sign Out</a
-      >
+      <form action="/signout" method="post">
+        <button type="submit" class="nav-link px-3 btn btn-dark">
+          <span data-feather="log-out" class="align-text-bottom"></span>
+          Sign Out
+        </button>
+      </form>
     </div>
   </div>
 </header>

@@ -3,6 +3,7 @@ import "express-session";
 class User {
   id?: number;
   name?: string;
+  role?: string;
 }
 
 declare module "express-session" {

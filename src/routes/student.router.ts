@@ -5,6 +5,7 @@ import os from "os";
 
 // controller
 import studentController from "../controllers/student.controller";
+import auth from "../middlewares/auth";
 
 class StudentRouter implements IRouter {
   public route: Router;
@@ -15,6 +16,7 @@ class StudentRouter implements IRouter {
   }
 
   router() {
+    this.route.use(auth);
     this.route.get("/", studentController.index);
     this.route.get("/create", studentController.create);
     this.route.post(

@@ -10,8 +10,35 @@ class AuthController {
     res.render("pages/auth/signin", { alert });
   }
 
-  signin(req: Request, res: Response): void {
-    res.send(req.body);
+  async signin(req: Request, res: Response): Promise<any> {
+    try {
+      const { username, password } = req.body;
+      const user = await db.User.findOne({ username: username });
+      if (!user) {
+        req.flash("alert", "danger");
+        req.flash("message", "User not found");
+        return res.redirect("/");
+      }
+
+      const matchedPassword = bcrypt.compareSync(password, user.password);
+      if (!matchedPassword) {
+        req.flash("alert", "danger");
+        req.flash("message", "Something wrong");
+        return res.redirect("/");
+      }
+
+      req.session.user = {
+        id: user.id,
+        name: user.name,
+        role: user.role,
+      };
+
+      return res.redirect("/dashboard");
+    } catch (error) {
+      req.flash("alert", "danger");
+      req.flash("message", `${error}`);
+      return res.redirect("/");
+    }
   }
 
   register(req: Request, res: Response): void {
@@ -38,6 +65,19 @@ class AuthController {
       req.flash("alert", "danger");
       req.flash("message", `${error}`);
       return res.redirect("/register");
+    }
+  }
+
+  async signout(req: Request, res: Response): Promise<any> {
+    try {
+      req.session.destroy((err) => {
+        if (err) console.log(err);
+        return res.redirect("/");
+      });
+    } catch (error: any) {
+      req.flash("alert", "danger");
+      req.flash("message", `${error}`);
+      return res.redirect("/");
     }
   }
 }
