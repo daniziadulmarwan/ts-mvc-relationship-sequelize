@@ -33,6 +33,12 @@ class AuthController {
         role: user.role,
       };
 
+      res.app.locals.credential = {
+        id: user.id,
+        name: user.fullname,
+        role: user.role,
+      };
+
       return res.redirect("/dashboard");
     } catch (error) {
       req.flash("alert", "danger");

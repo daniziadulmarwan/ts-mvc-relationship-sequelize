@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import path from "path";
 import fs from "fs";
 const db = require("../database/models");
+import StudentService from "../services/student.service";
 
 class StudentController {
   async index(req: Request, res: Response): Promise<any> {
-    const students = await db.Student.findAll();
+    const service: StudentService = new StudentService(req);
+    const students = await service.fetchAll();
 
     const alertStatus = req.flash("alert");
     const alertMessage = req.flash("message");
@@ -28,43 +30,9 @@ class StudentController {
 
   async post(req: Request, res: Response): Promise<any> {
     try {
-      const { name, nisn, gender } = req.body;
-      const rootPath = path.resolve("public");
-
-      if (req.file) {
-        const tmpPath = req.file.path;
-        const ext = path.extname(req.file.originalname);
-        const fileName = new Date().getTime() + ext;
-
-        const src = fs.createReadStream(tmpPath);
-        const dest = fs.createWriteStream(`${rootPath}/uploads/${fileName}`);
-
-        src.pipe(dest);
-        src.on("end", async () => {
-          try {
-            await db.Student.create({
-              name,
-              nisn,
-              gender,
-              image: fileName,
-            });
-
-            req.flash("alert", "success");
-            req.flash("message", "Success create data");
-            return res.redirect("/student");
-          } catch (error: any) {
-            req.flash("alert", "danger");
-            req.flash("message", error.message);
-            return res.redirect("/student");
-          }
-        });
-      } else {
-        await db.Student.create({
-          name,
-          nisn,
-          gender,
-        });
-
+      const service: StudentService = new StudentService(req);
+      const response = await service.store();
+      if (response) {
         req.flash("alert", "success");
         req.flash("message", "Success create data");
         return res.redirect("/student");
